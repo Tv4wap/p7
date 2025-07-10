@@ -33,11 +33,8 @@
       .shaka-video-container {
         position: absolute ;
         width: 100%;height:100%;
-        aspect-ratio: 16/9;
-        background-color: #000;
-        border-radius: 1px;
-        overflow: hidden;
-        box-shadow: 0 4px 2px rgba(0,0,0,0.5);
+        
+        
       }
 
       video {
@@ -80,47 +77,17 @@
           max-width: 854px;
         }
       }
-    .youtube-theme .shaka-back-to-overflow-button {
-      padding: 8px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-      font-size: 12px;
-      color: #eee;
-      height: 40px;
-    }.manual-play-button {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0, 0, 0, 0.8);
-      color: white;
-      padding: 20px 30px;
-      border-radius: 28px;
-      cursor: pointer;
-      font-size: 18px;
-      z-index: 2000;
-      border: 0px solid #ff0000;
-      display: none;
-      transition: all 0.3s ease;
-    }.manual-play-button {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-
-
-
-    
   </style>
 </head>
 
 
 <div class="video-container">
-<div class="shaka-video-container youtube-theme" data-shaka-player>
+<div class="shaka-video-container youtube-theme" >
     <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiQ92h-ekVYskxW9qCgLvpQVMpAs4tqUQXnH9nDi37JW5B95V7Cq2Rz_mlGO68vTZmA2H5Qp4p8B0I9EUlW-6W1aVOZgITWN3xyE65Hd6G5G_D6HJFxiuXJaK-wMfYD0PiiUR9EBodkzuPH0-ubAMJQK_3F3rpDMEIJKCxlEzNZucpRzsumlBFXWqinGOw=s885" alt="Logo" class="video-watermark">
     <video id="video" autoplay="yes" oncanplay="this.muted=false" poster="https://blogger.googleusercontent.com/img/a/AVvXsEiGqaZeRBZ6Y7yV5ZYSRiNRhBa5q9_EMx7R5TJcHd3XJwwHh2YhNOGt76Y4vEcUIjvIaA7W-Tw1RyMLP-4WZwVHA4mk18zwXl7HdSL5WabprIasDOWJO7jpL0zTQB4p_y7X0Rv0xwe-cJ-GvxofAgeRp2FIiNgB90n_b8Cqw0sAaZqVhJg_fi9UyfSO8KY" playsinline controls>
 
-</video> </div>
-</div>
+</video> 
+</div></div>
 
 
 
@@ -129,10 +96,11 @@
   const queryParams = new URLSearchParams(window.location.search);
         const url = queryParams.get('url');
   
+    
     const channelstreamInfo = {  
-      streamUrl: url,
+      streamUrl: url, 
       authBearer: "",   
-      streamPoster: ""
+      streamPoster: "https://raw.githubusercontent.com/abusaeeidx/Tv-Channel-Logo/heads/main/CricHD/runded/1745008895589.png"
     };
 
     let player;
@@ -143,6 +111,9 @@
         // Initialize Shaka Player first for better HLS support
         player = new shaka.Player();
         await player.attach(video);
+
+
+
 const container = document.querySelector('.shaka-video-container');
 const ui = new shaka.ui.Overlay(player, container, video);
   
@@ -172,17 +143,18 @@ const ui = new shaka.ui.Overlay(player, container, video);
   
   ui.configure(config);
   const controls = ui.getControls();
+
         // Configure player for better performance
         player.configure({
           streaming: {
-            bufferingGoal: 1,
-            rebufferingGoal:2,
-            bufferBehind: 1
+            bufferingGoal: 10,
+            rebufferingGoal: 2,
+            bufferBehind: 30
           },
           manifest: {
             retryParameters: {
               timeout: 30000,
-              maxAttempts: 3,
+              maxAttempts: 2,
               baseDelay: 1000,
               backoffFactor: 2,
               fuzzFactor: 0.5
@@ -203,7 +175,8 @@ const ui = new shaka.ui.Overlay(player, container, video);
         
         // Load the stream
         await player.load(channelstreamInfo.streamUrl);
-        console.log('Stream loaded successfully.');
+        
+console.log('Stream loaded successfully.');
 
         // Force autoplay with multiple attempts
         const attemptAutoplay = async () => {
@@ -245,14 +218,15 @@ const ui = new shaka.ui.Overlay(player, container, video);
         }
       }
     }
+        
 
-    // Initialize player when page loads
+        
+      
+  // Initialize player when page loads
     document.addEventListener('DOMContentLoaded', () => {
       initializePlayer().catch(error => {
         console.error('Error initializing player:', error);
       });
     });
-
-    
     
 </script>
