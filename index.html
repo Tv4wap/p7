@@ -190,14 +190,7 @@ const ui = new shaka.ui.Overlay(player, container, video);
           }
         });
 
-        // Set up network adapter for authorization
-        const networkingEngine = player.getNetworkingEngine();
-        networkingEngine.clearAllRequestFilters();
-        networkingEngine.registerRequestFilter((type, request) => {
-          if (channelstreamInfo.authBearer) {
-            request.headers['Authorization'] = `Bearer ${channelstreamInfo.authBearer}`;
-          }
-        });
+        
 
         // Set video properties for autoplay
         video.autoplay = true;
@@ -260,33 +253,6 @@ const ui = new shaka.ui.Overlay(player, container, video);
       });
     });
 
-    // Keyboard controls
-    document.addEventListener('keydown', event => {
-      if (!video) return;
-
-      switch (event.code) {
-        case 'Space':
-          event.preventDefault();
-          video.paused ? video.play() : video.pause();
-          break;
-        case 'ArrowUp':
-          event.preventDefault();
-          video.volume = Math.min(video.volume + 0.1, 1);
-          break;
-        case 'ArrowDown':
-          event.preventDefault();
-          video.volume = Math.max(video.volume - 0.1, 0);
-          break;
-        case 'KeyF':
-          if (document.fullscreenElement) {
-            document.exitFullscreen();
-          } else {
-            video.requestFullscreen();
-          }
-          break;
-        case 'KeyM':
-          video.muted = !video.muted;
-          break;
-      }
-    });
+    
+    
 </script>
